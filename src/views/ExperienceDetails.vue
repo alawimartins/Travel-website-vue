@@ -4,8 +4,9 @@
         <h2>{{experience.name}}</h2>
         <div class="experience-details">
             <img :src="require(`@/assets/assets/${experience.image}`)" :alt="experience.name">
+            <p>{{experience.description}}</p>
         </div>
-        <p>{{experience.description}}</p>
+        
     </section>
     
 </template>
@@ -50,6 +51,7 @@ export default {
     .experience-details{
         display: flex;
         justify-content: space-between;
+        align-items: center;
     }
 
     p{

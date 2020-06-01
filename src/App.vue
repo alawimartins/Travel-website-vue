@@ -2,7 +2,9 @@
   <div id="app">
     <TheNavegation/>
     <!-- the key will reload a new component with the new data -->
-    <router-view :key="$route.path" />
+    <transition name="slide">
+      <router-view :key="$route.path" />
+    </transition>
   </div>
 </template>
 
@@ -26,7 +28,20 @@ export default {
   color: #2c3e50;
 }
 
+html {
+  scroll-behavior: smooth;
+}
 
+.slide-enter-active,
+.slide-leave-active {
+  transition: opacity 1s, transform 1s;
+}
+
+.slide-enter-to,
+.slide-leave-to{
+  opacity: 0;
+  transform: translateX(-30%);
+}
 
 
 </style>

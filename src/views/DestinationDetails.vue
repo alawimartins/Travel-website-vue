@@ -10,20 +10,23 @@
         </section>
         <section class="experiences">
             <h2>Top Experiences in {{destination.name}}</h2>
-            <div class="cards">
+            <div class="cards" >
                 <div v-for="experience in destination.experiences"
                 :key="experience.slug" class="card">
                     <router-link :to="{
                         name: 'experienceDetails',
                         params: {experienceSlug: experience.slug}
                     }">
-
-                            <img :src="require(`@/assets/assets/${experience.image}`)" :alt="experience.name" />
-                            <span class="card__text">{{experience.name}}</span>
+                            
+                            <img  :src="require(`@/assets/assets/${experience.image}`)" :alt="experience.name" @click="scroll"/>
+                            <span class="card__text" @click="scroll">{{experience.name}}</span>
+                            
                     </router-link>
                 </div>
             </div>
-            <router-view :key="$route.path" />
+            <transition name="no-transition">
+                <router-view :key="$route.path"  />
+            </transition>
         </section>
     </div>
 </template>
@@ -53,7 +56,17 @@ export default {
                 destination => destination.slug === this.slug
             )
         }
+    },
+    methods: {
+    scroll() {
+        console.log('hello')
+        console.log(document.body.scrollHeight)
+        window.scrollTo(0,document.body.scrollHeight);
+
+      
     }
+  }
+
 }
 </script>
 
@@ -96,5 +109,34 @@ p {
     font-weight: bold;
     text-decoration: none;
 
+}
+
+.cards {
+    display: flex;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+
+
+
+.no-transition-enter-active,
+.no-transition-leave-active {
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease;
+}
+
+
+.no-transition-enter,
+.no-transition-leave-to{
+    opacity:0;
+    transform: translateY(-100px);
+}
+
+.no-transition-enter-to,
+.no-transition-leave {
+    opacity:1;
+    transform: translateY(0px);
 }
 </style>
